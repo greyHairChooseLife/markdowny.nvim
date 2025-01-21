@@ -206,6 +206,10 @@ function M.italic()
     inline_surround('_', '_')
 end
 
+function M.cancel()
+    inline_surround('~', '~')
+end
+
 function M.code()
     if vim.fn.visualmode() == 'V' then
         newline_surround('```', '```')
@@ -235,10 +239,11 @@ function M.setup(opts)
 
     vim.api.nvim_create_autocmd('FileType', {
         desc = 'markdowny.nvim keymaps',
-        pattern = opts.filetypes or {'markdown', 'gitcommit', 'hgcommit'},
+        pattern = opts.filetypes or { 'markdown', 'gitcommit', 'hgcommit' },
         callback = function()
             vim.keymap.set('v', '<C-b>', ":lua require('markdowny').bold()<cr>", { buffer = 0, silent = true })
             vim.keymap.set('v', '<C-i>', ":lua require('markdowny').italic()<cr>", { buffer = 0, silent = true })
+            vim.keymap.set('v', '<C-c>', ":lua require('markdowny').cancel()<cr>", { buffer = 0, silent = true })
             vim.keymap.set('v', '<C-k>', ":lua require('markdowny').link()<cr>", { buffer = 0, silent = true })
             vim.keymap.set('v', '<C-e>', ":lua require('markdowny').code()<cr>", { buffer = 0, silent = true })
         end,
